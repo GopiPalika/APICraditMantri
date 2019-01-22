@@ -7,8 +7,8 @@ const options = {
   headers: {
     'Content-Type': 'application/json','apiVersion' : 'v2'
   },
-  form: {
-    "phone_home":"6162636465","ip": "::ffff:127.0.0.1"
+  json: {
+    "phone_home":"7777777778","ip": "::ffff:127.0.0.1"
 }
 };
 
@@ -21,7 +21,7 @@ request.post(options ,(err,response,tokan)=>{
  })}
 
  const headers = {
-    'Authorization':'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjI2NzYyOTUsImV4cCI6MTU0Nzk5Mzg0MiwiY29udGV4dCI6eyJlbWFpbCI6InNvbnBhdWwyNUBnbWFpbC5jb20ifX0.-FdosxF_6J9Q54SjeecGySSmPBCoLq13pxqHTdUS4ug'
+    'Authorization':'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjI2NzA5OTEsImV4cCI6MTU0ODIyODEyMSwiY29udGV4dCI6eyJlbWFpbCI6InNvbnBhdWwyNUBnbWFpbC5jb20ifX0.Hx7zvnhDO6VZYRn7KKgyoD69v-i8H203kfYAUiGgHJs'
   };
 
  const options1 = {
@@ -35,7 +35,7 @@ request.post(options ,(err,response,tokan)=>{
 exports.dashboardWidget = (req, res) => {
 request.post(options1 ,(err,response)=>{
   res.status(200).json({
-    dashBoard:response
+    data:response
   });
  })}
 
@@ -87,6 +87,20 @@ request.post(options ,(err,response)=>{
       "type": "initiatePay",
       "service": "cis",
       "oic": 9999,
+      "ip": "::ffff:127.0.0.1"
+  }
+  };
+request.post(options ,(err,response)=>{
+  res.status(200).json({
+    data:response
+  });
+ })}
+
+ exports.creditAssessment = (req, res) => {
+  const options = {
+    url: ' https://pwa-cmol.creditmantri.in/api/v1/credit-assessment',
+    headers:headers,
+    json:{
       "ip": "::ffff:127.0.0.1"
   }
   };

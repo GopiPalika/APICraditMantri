@@ -10,4 +10,5 @@ const router = express.Router();
  router.post('/addQuoteItems', feedController.addQuoteItems);
  router.post('/planDetails', feedController.planDetails);
  router.post('/initiatePay', feedController.initiatePay);
+ router.post('/creditAssessment', feedController.creditAssessment);
 module.exports = router;
