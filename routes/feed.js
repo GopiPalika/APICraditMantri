@@ -11,4 +11,7 @@ const router = express.Router();
  router.post('/planDetails', feedController.planDetails);
  router.post('/initiatePay', feedController.initiatePay);
  router.post('/creditAssessment', feedController.creditAssessment);
+ router.post('/paymentCapture', feedController.paymentCapture);
+ router.post('/postSubs', feedController.postSubs);
+ // router.post('/postSubs', feedController.postSubs);
 module.exports = router;

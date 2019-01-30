@@ -8,7 +8,7 @@ const options = {
     'Content-Type': 'application/json','apiVersion' : 'v2'
   },
   json: {
-    "phone_home":"7777777778","ip": "::ffff:127.0.0.1"
+    "phone_home":"7018211919","ip": "::ffff:127.0.0.1"
 }
 };
 
@@ -21,7 +21,8 @@ request.post(options ,(err,response,tokan)=>{
  })}
 
  const headers = {
-    'Authorization':'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjI2NzA5OTEsImV4cCI6MTU0ODIyODEyMSwiY29udGV4dCI6eyJlbWFpbCI6InNvbnBhdWwyNUBnbWFpbC5jb20ifX0.Hx7zvnhDO6VZYRn7KKgyoD69v-i8H203kfYAUiGgHJs'
+   
+    'Authorization':'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjI2NzMzMjMsImV4cCI6MTU0ODgzOTUxNSwiY29udGV4dCI6eyJlbWFpbCI6Imphbmkua3VtYXIwMkB5YWhvby5pbiJ9fQ.LsqGQk9NagNGuAwrVVHOYsupVGYoOZnI3tJcsrLPouQ'
   };
 
  const options1 = {
@@ -109,3 +110,72 @@ request.post(options ,(err,response)=>{
     data:response
   });
  })}
+
+
+
+
+ exports.postSubs = (req, res) => {
+  const options = {
+    url: 'https://pwa-cmol.creditmantri.in/api/v1/diy/account-details',
+    headers:{
+      'Authorization':'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjI2NzMzMjMsImV4cCI6MTU0ODgzOTUxNSwiY29udGV4dCI6eyJlbWFpbCI6Imphbmkua3VtYXIwMkB5YWhvby5pbiJ9fQ.LsqGQk9NagNGuAwrVVHOYsupVGYoOZnI3tJcsrLPouQ'               
+    },
+    json:{
+      "accountId": "156",
+      "accountType": "resolve",
+      "oic": 9999,
+      "ip": "::ffff:127.0.0.1"
+  }
+  };
+request.post(options ,(err,response)=>{
+  res.status(200).json({
+    data:response
+  });
+ })}
+
+
+//  exports.paymentCapture = (req, res) => {
+//    console.log(req.body)
+//   const options = {
+//     url: 'https://pwa-cmol.creditmantri.in/api/v1/subscribe/plan',
+//     headers:headers,
+//     json: {
+//       "type": "paymentDetails",
+//       "orderId": '83485',
+//       "oic": 9999,
+//       "ip": "::ffff:127.0.0.1"
+//   }
+//   };
+// request.post(options ,(err,response)=>{
+//   res.status(200).json({
+//     data:response
+//   });
+//  })}
+
+exports.paymentCapture = (req, res) => {
+ const options = {
+   url: 'https://pwa-cmol.creditmantri.in/api/v1/subscribe/plan',
+   headers:headers,
+   json: req.body
+ };
+ console.log(req.body.orderId)
+request.post(options ,(err,response)=>{
+  const detailsOpton  = {
+    url: 'https://pwa-cmol.creditmantri.in/api/v1/subscribe/plan',
+    headers:headers,
+    json: { 
+      'type': "paymentDetails",
+      'orderId': req.body.orderId,
+      "ip": "::ffff:127.0.0.1"
+    }
+  };
+  request.post(detailsOpton,(err,response)=>{
+     res.status(200).json({
+   data:response
+ });
+  });
+//  res.status(200).json({
+//    data:response
+//  });
+})}
+
