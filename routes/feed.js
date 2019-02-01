@@ -13,5 +13,7 @@ const router = express.Router();
  router.post('/creditAssessment', feedController.creditAssessment);
  router.post('/paymentCapture', feedController.paymentCapture);
  router.post('/postSubs', feedController.postSubs);
- // router.post('/postSubs', feedController.postSubs);
+ router.post('/withDiscount', feedController.withDiscount);
+ router.post('/changePaymentPlan', feedController.changePaymentPlan);
+ router.post('/uploadProof', feedController.uploadProof);
 module.exports = router;

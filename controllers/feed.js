@@ -8,7 +8,7 @@ const options = {
     'Content-Type': 'application/json','apiVersion' : 'v2'
   },
   json: {
-    "phone_home":"7018211919","ip": "::ffff:127.0.0.1"
+    "phone_home":"9191919595","ip": "::ffff:127.0.0.1"
 }
 };
 
@@ -22,7 +22,7 @@ request.post(options ,(err,response,tokan)=>{
 
  const headers = {
    
-    'Authorization':'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjI2NzMzMjMsImV4cCI6MTU0ODgzOTUxNSwiY29udGV4dCI6eyJlbWFpbCI6Imphbmkua3VtYXIwMkB5YWhvby5pbiJ9fQ.LsqGQk9NagNGuAwrVVHOYsupVGYoOZnI3tJcsrLPouQ'
+    'Authorization':'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjI2NzYyOTUsImV4cCI6MTU0OTAyNjY1NCwiY29udGV4dCI6eyJlbWFpbCI6InNvbnBhdWwyNUBnbWFpbC5jb20ifX0.j9Kp-S1i_QJlL6wEILQweyAN7vipxzmSVT9Xz9oKlYo'
   };
 
  const options1 = {
@@ -117,40 +117,20 @@ request.post(options ,(err,response)=>{
  exports.postSubs = (req, res) => {
   const options = {
     url: 'https://pwa-cmol.creditmantri.in/api/v1/diy/account-details',
-    headers:{
-      'Authorization':'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjI2NzMzMjMsImV4cCI6MTU0ODgzOTUxNSwiY29udGV4dCI6eyJlbWFpbCI6Imphbmkua3VtYXIwMkB5YWhvby5pbiJ9fQ.LsqGQk9NagNGuAwrVVHOYsupVGYoOZnI3tJcsrLPouQ'               
-    },
-    json:{
-      "accountId": "156",
-      "accountType": "resolve",
-      "oic": 9999,
-      "ip": "::ffff:127.0.0.1"
-  }
+    headers:headers,
+   json: req.body
+  //  json: {
+  //   accountId: '1227',
+  //   accountType: "resolve",
+  //   oic: 9999,
+  //   ip: '::ffff:127.0.0.1',
+  // }
   };
 request.post(options ,(err,response)=>{
   res.status(200).json({
     data:response
   });
  })}
-
-
-//  exports.paymentCapture = (req, res) => {
-//    console.log(req.body)
-//   const options = {
-//     url: 'https://pwa-cmol.creditmantri.in/api/v1/subscribe/plan',
-//     headers:headers,
-//     json: {
-//       "type": "paymentDetails",
-//       "orderId": '83485',
-//       "oic": 9999,
-//       "ip": "::ffff:127.0.0.1"
-//   }
-//   };
-// request.post(options ,(err,response)=>{
-//   res.status(200).json({
-//     data:response
-//   });
-//  })}
 
 exports.paymentCapture = (req, res) => {
  const options = {
@@ -174,8 +154,56 @@ request.post(options ,(err,response)=>{
    data:response
  });
   });
-//  res.status(200).json({
-//    data:response
-//  });
 })}
 
+  exports.withDiscount = (req, res) => {
+  const options = {
+    url: 'http://cmol-api.dv/api/v1/diy/customer-request/offerAgree',
+    headers:headers,
+    json: req.body
+    // json:{"accountId":"1188",
+    // "paymentPlanId":"820",
+    // "isDiscountPlan":"1",
+    // "paymentType":"FULL",
+    // "type":"resolve",
+    // "oic":9999,
+    // "installment":"0",
+    // "ip":"::ffff:127.0.0.1"}
+  };
+request.post(options ,(err,response)=>{
+  res.status(200).json({
+    data:response
+  });
+ })}
+
+ exports.changePaymentPlan = (req, res) => {
+  const options = {
+    url: 'http://cmol-api.dv/api/v1/diy/customer-request/changePlan',
+    headers:headers,
+    json: req.body
+    //json:{"accountId":"101","paymentPlanId":"32","type":"resolve","oic":9999,"ip":"::ffff:127.0.0.1"}
+  };
+request.post(options ,(err,response)=>{
+  res.status(200).json({
+    data:response
+  });
+ })}
+
+ exports.uploadProof = (req, res) => {
+  const options = {
+    url: 'http://cmol-api.dv/api/v1/diy/customer-request/uploadProof',
+    headers:headers,
+    json:{
+      "accountId":"101",
+    "paymentType":"PART",
+    "paymentMode":"paymentUrl",
+    "type":"resolve",
+    "oic":9999,
+    "ip":"::ffff:127.0.0.1"
+  }
+  };
+request.post(options ,(err,response)=>{
+  res.status(200).json({
+    data:response
+  });
+ })}
