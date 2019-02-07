@@ -16,4 +16,6 @@ const router = express.Router();
  router.post('/withDiscount', feedController.withDiscount);
  router.post('/changePaymentPlan', feedController.changePaymentPlan);
  router.post('/uploadProof', feedController.uploadProof);
+ router.post('/paymentConfirmation', feedController.paymentConfirmation);
+ router.post('/saveUploadedFile', feedController.saveUploadedFile);
 module.exports = router;
