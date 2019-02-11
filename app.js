@@ -4,13 +4,35 @@ const cors = require('cors');
 const feedRoutes = require('./routes/feed');
 
 var multer  = require('multer')
-var upload = multer({ dest: 'D:/css' })
+
 var session = require('express-session');
 const app = express();
 app.use(cors());
 app.options('*', cors());
+  
+const fileStorage = multer.diskStorage({
+    destination:(req,file,cb) =>{
+        cb(null,'./uploads');
+    },
+    filename:(req,file,cb) =>{
+        cb(null,  file.originalname)
+    }
+})
+//app.use('/images', express.static(path.join(__dirname,)))
+// app.use(
+//     multer({ storage: fileStorage}).single('myFile')
+//   );
 
-app.use(session({secret: 'ssshhhhh'}));
+// app.use(
+//     session({
+//       secret: 'my secret',
+//       resave: false,
+//       saveUninitialized: false,
+//       store: store
+//     })
+//   );
+//app.use(session({secret: 'ssshhhhh'}));
+app.use(session({ secret: 'krunal', resave: false, saveUninitialized: false, }));
 
 app.use(bodyParser.json()); // application/json
 
@@ -28,13 +50,21 @@ app.use(function(req, res, next) {
     next();
 });
 
-app.post('/creditmantri/profile', upload.single('myFile'), function (req, res, next) {
-    console.log(req.file)
+// app.post('/creditmantri/profile', upload.single('myFile'), function (req, res, next) {
+//     console.log(req.file)
+//   })
+
+app.post('/creditmantri/profile', multer({ storage: fileStorage}).single('myFile'), function (req, res, next) {
+   next()
+    return new Promise(() => {
+        return {dood:res};
+      });
+    
   })
 
-app.use('/creditmantri/getToken',function(req, res, next) {
-    next();
-});
+// app.use('/creditmantri/getToken',function(req, res, next) {
+//     next();
+// });
 
 app.use('/creditmantri', feedRoutes);
 

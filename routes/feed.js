@@ -18,4 +18,5 @@ const router = express.Router();
  router.post('/uploadProof', feedController.uploadProof);
  router.post('/paymentConfirmation', feedController.paymentConfirmation);
  router.post('/saveUploadedFile', feedController.saveUploadedFile);
+ router.post('/profile', feedController.profile);
 module.exports = router;
