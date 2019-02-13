@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const feedRoutes = require('./routes/feed');
-
+var fs = require('fs');
 var multer  = require('multer')
 
 var session = require('express-session');
@@ -15,6 +15,29 @@ const fileStorage = multer.diskStorage({
         cb(null,'./uploads');
     },
     filename:(req,file,cb) =>{
+       var filename =''
+     //    fs.readdir('./uploads', (err, files) => {
+      //       files.forEach(filein => {
+    //            // console.log(file)
+    //             console.log(file.originalname + '   org')
+    //             console.log(filein + '   in')
+                // if(filein === file.originalname){
+                //     filename = file.originalname +'R.png'
+                // } 
+    //else if(filein == file.originalname +'R.png'){
+    //                 filename = file.originalname +'R1.png'
+    //             }
+    //             else if(filein == file.originalname +'R1.png'){
+    //                 filename = file.originalname +'R2.png'
+    //             }else if(filein == file.originalname +'R2.png'){
+    //                 filename = file.originalname +'R3.png'
+    //             }else if(filein == file.originalname +'R3.png'){
+    //                 filename = file.originalname +'R4.png'
+    //             }else{
+    //                 filename = file.originalname;
+    //             }
+    //          });
+ //          });
         cb(null,  file.originalname)
     }
 })

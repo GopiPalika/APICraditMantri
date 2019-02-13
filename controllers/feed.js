@@ -7,17 +7,20 @@ var FormData = require('form-data');
 
 var multer  = require('multer')
 var upload = multer({ dest: 'uploads/' })
-
+var multiparty = require('multiparty');
+// var http = require('http');
+// var util = require('util');
 const options = {
   url: 'https://pwa-cmol.creditmantri.in/api/v1/otprequest',
   headers: {
     'Content-Type': 'application/json','apiVersion' : 'v2'
   },
   json: {
-    "phone_home":"7018211919","ip": "::ffff:127.0.0.1"
+    "phone_home":"9486782259","ip": "::ffff:127.0.0.1"
 }
 };
-//9234923499
+// 9486782259
+//9234923499  
 // 7814191267
 //  7018211919
 // 7629751700
@@ -32,7 +35,6 @@ request.post(options ,(err,response,tokan)=>{
     req.session.token = response.headers.authorization
   }
 
-
   res.status(200).json({
     data:tokan,
     token:response.headers.authorization
@@ -40,8 +42,8 @@ request.post(options ,(err,response,tokan)=>{
  })}
 
  const headers=(req) => {
-   return {'Authorization':'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjI2NzMzMjMsImV4cCI6MTU0OTc4MDgzNSwiY29udGV4dCI6eyJlbWFpbCI6Imphbmkua3VtYXIwMkB5YWhvby5pbiJ9fQ.c1VwOVs9pB3hxZr1zHfcSkE8lrAxNE947qMnQ0l5xnw'}
- //  return {'Authorization':'Bearer '+ req.session.token}  
+   return {'Authorization':'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjI2ODE5MDYsImV4cCI6MTU1MDEzMjM1OCwiY29udGV4dCI6eyJlbWFpbCI6Imthc2lyYWphLmdAY3JlZGl0bWFudHJpLmNvbSJ9fQ.D_tALm9N5chfR_Dc784wD8c-AmiQqH80EtBLnK7FoDU'}
+  // return {'Authorization':'Bearer '+ req.session.token}  
 };
 
 
@@ -64,7 +66,6 @@ request.post(options1 ,(err,response)=>{
 
 exports.dashboarCis = (req, res) => {
  
-//  console.log(req.session)
   const options = {
     url: 'https://pwa-cmol.creditmantri.in/api/v1/dashboard/cis',
     headers:headers(req),
@@ -235,29 +236,33 @@ request.post(options ,(err,response)=>{
  })}
 
  exports.paymentConfirmation = (req, res) => {
+//  console.log(req.body)
   var bodyFormData = new FormData();
-  bodyFormData.append('accountId', '156');
-  bodyFormData.append('paymentPlanId', '80');
-  bodyFormData.append('paymentMode', 'Online Payment Gateway');
-  bodyFormData.append('paymentDate', '09-01-2019');
-  bodyFormData.append('amountPaid', '2000');
-  bodyFormData.append('paymentBank', 'others');
-  bodyFormData.append('tranRefNo', '23444444444');
-  bodyFormData.append('proof', fs.createReadStream('../uploads/CreditCardCheck.png'));
+  bodyFormData.append('accountId', req.body.accountId);
+  bodyFormData.append('paymentPlanId', req.body.paymentPlanId);  // selectedPaymentPlan.id  || data.paymentPlansclosure.id
+  bodyFormData.append('paymentMode', req.body.paymentMode);
+  bodyFormData.append('paymentDate', req.body.paymentDate);
+  bodyFormData.append('amountPaid', req.body.amountPaid);
+  bodyFormData.append('paymentBank', req.body.paymentBank);
+  bodyFormData.append('tranRefNo', req.body.tranRefNo);
+  bodyFormData.append('proof', fs.createReadStream('../uploads/'+ req.body.proof));
   bodyFormData.append('oic', '9999');
-  bodyFormData.append('type', 'resolve');
-  bodyFormData.append('paymentId', '105');
+  bodyFormData.append('type', req.body.type);
+  bodyFormData.append('paymentId', req.body.paymentId); // 105 // data.paymentDetails[key].proofOfPaymentSubmittedDate!= null &&  data.paymentDetails[key].isPaymentProofAvailable
   bodyFormData.append('ip', '::ffff:127.0.0.1');
   const options = {
     url: 'https://pwa-cmol.creditmantri.in/api/v1/diy/customer-request/paymentConfirmation',
     headers:headers(req),
-    formData: bodyFormData
+    form: bodyFormData
   };
+
 request.post(options ,(err,response)=>{
   res.status(200).json({
     data:response
   });
- })}
+ }
+)
+}
 
 
   exports.saveUploadedFile = (req, res) => {
@@ -268,3 +273,18 @@ request.post(options ,(err,response)=>{
     return {dood:res};
   });
 }
+
+
+
+exports.getFiles = req => {
+  return new Promise((resolve, reject) => {
+      var form = new multiparty.Form();
+
+      form.parse(req, (err, fields, files) => {
+        if (!err)
+            resolve([fields ? fields : [], files ? files : []]);
+          else
+            reject(err);
+      });
+  });
+};
