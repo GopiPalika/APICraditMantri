@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const feedRoutes = require('./routes/feed');
@@ -38,10 +39,12 @@ const fileStorage = multer.diskStorage({
     //             }
     //          });
  //          });
+ console.log( file.originalname)
         cb(null,  file.originalname)
     }
 })
-//app.use('/images', express.static(path.join(__dirname,)))
+//app.use('/uploads', express.static(path.join(__dirname)))
+app.use('/creditmantri/uploads', express.static(path.join(__dirname,'uploads')))
 // app.use(
 //     multer({ storage: fileStorage}).single('myFile')
 //   );
